@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "./utils/userSlice";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const handleLogin = async (e) => {
     e.preventDefault();
     const result = await axios.post(
@@ -14,7 +17,9 @@ const Login = () => {
       },
       { withCredentials: true }
     );
-    console.log(result);
+    const userData = result?.data?.data;
+    console.log(userData);
+    dispatch(addUser(userData));
   };
   return (
     <div className="h-[calc(100vh-8rem)] bg-base-200 flex items-center justify-center">
