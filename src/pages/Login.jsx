@@ -1,16 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser } from "./utils/userSlice";
-
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import BASE_URL from "../config/baseurl";
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     const result = await axios.post(
-      "http://localhost:3030/login",
+      BASE_URL + "/login",
       {
         emailId,
         password,
@@ -20,6 +22,7 @@ const Login = () => {
     const userData = result?.data?.data;
     console.log(userData);
     dispatch(addUser(userData));
+    navigate("/feed");
   };
   return (
     <div className="h-[calc(100vh-8rem)] bg-base-200 flex items-center justify-center">
