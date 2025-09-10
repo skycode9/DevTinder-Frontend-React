@@ -7,22 +7,28 @@ import BASE_URL from "../config/baseurl";
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = async (e) => {
-    e.preventDefault();
-    const result = await axios.post(
-      BASE_URL + "/login",
-      {
-        emailId,
-        password,
-      },
-      { withCredentials: true }
-    );
-    const userData = result?.data?.data;
-    console.log(userData);
-    dispatch(addUser(userData));
-    navigate("/feed");
+    try {
+      e.preventDefault();
+      const result = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      const userData = result?.data?.data;
+      console.log(userData);
+      dispatch(addUser(userData));
+      navigate("/feed");
+    } catch (error) {
+      console.log(error);
+      setAuthError(error?.response?.data?.msg || "Something went wrong");
+    }
   };
   return (
     <div className="h-[calc(100vh-8rem)] bg-base-200 flex items-center justify-center">
@@ -72,6 +78,9 @@ const Login = () => {
                 Forgot password?
               </a>
             </label>
+            {authError && (
+              <p className="text-red-500 shadow-2xl">{authError}</p>
+            )}
           </form>
 
           {/* Divider */}
