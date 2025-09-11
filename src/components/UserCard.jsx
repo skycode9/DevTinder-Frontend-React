@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserCard = ({ userFeed }) => {
+const UserCard = ({ userFeed, showButtons = true, onInterested, onIgnored }) => {
   const { firstName, lastName, about, age, gender, photoUrl } = userFeed;
 
   return (
@@ -16,10 +16,22 @@ const UserCard = ({ userFeed }) => {
           <h2>{age && age}</h2>
           <h2>{gender && gender}</h2>
           <p>{about}</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Interested</button>
-            <button className="btn btn-error">Ignored</button>
-          </div>
+          {showButtons && (
+            <div className="card-actions justify-end">
+              <button 
+                className="btn btn-primary" 
+                onClick={onInterested}
+              >
+                Interested
+              </button>
+              <button 
+                className="btn btn-error" 
+                onClick={onIgnored}
+              >
+                Ignored
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

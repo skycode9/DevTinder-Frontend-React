@@ -1,12 +1,14 @@
 import React, { use, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import axios from "axios";
 import BASE_URL from "../config/baseurl";
+import { addUser } from "../utils/userSlice";
+import Toast from "../components/Toast";
 
 const Profile = () => {
   const userData = useSelector((store) => store.user);
-  console.log("user", userData);
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,6 +17,8 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [about, setAbout] = useState("");
   const [error, setError] = useState("");
+  const [toast, setToast] = useState(false);
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     if (userData) {
@@ -30,15 +34,28 @@ const Profile = () => {
   const handleEditProfile = async (e) => {
     try {
       e.preventDefault();
+      //error is empty
+      setError("");
+
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
         { firstName, lastName, photoUrl, age, gender, about },
         { withCredentials: true }
       );
-      console.log("res", res);
+      console.log("resmsg", res?.data?.message);
+
+      console.log("res", res?.data?.data);
+
+      dispatch(addUser(res?.data?.data));
+      setToast(true);
+      setMsg(res?.data?.message);
+      setTimeout(() => {
+        setToast(false);
+      }, 4000);
     } catch (error) {
-      console.log("error", res?.data?.err || res?.data?.msg);
-      setError("");
+      console.log("Catch block error:", error);
+      console.log("Error response:", error?.response?.data?.err);
+      setError(error?.response?.data?.err || "Something went wrong");
     }
   };
 
@@ -46,6 +63,7 @@ const Profile = () => {
     userData && (
       <>
         <div className="min-h-[calc(100vh-140px)] bg-base-200 flex  justify-center py-4">
+          {toast && <Toast message={msg && msg} />}
           <div className="card w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body">
               <h2 className="text-center text-2xl font-bold">Edit Profile</h2>
@@ -140,7 +158,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="ml-4">
-            <UserCard userFeed={userData} />
+            <UserCard userFeed={userData} showButtons={false} />
           </div>
         </div>
       </>

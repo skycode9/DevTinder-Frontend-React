@@ -27,10 +27,25 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
+  const handleInterested = () => {
+    console.log("User interested in:", feed[0]?.firstName);
+    // Add API call for interested action
+  };
+
+  const handleIgnored = () => {
+    console.log("User ignored:", feed[0]?.firstName);
+    // Add API call for ignored action
+  };
+
   return (
     feed && (
       <div>
-        <UserCard userFeed={feed[0]} />
+        <UserCard 
+          userFeed={feed[0]} 
+          showButtons={true}
+          onInterested={handleInterested}
+          onIgnored={handleIgnored}
+        />
       </div>
     )
   );

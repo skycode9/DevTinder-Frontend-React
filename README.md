@@ -34,6 +34,11 @@
 - Get the feed and add the feed in th store
 - build the user card on feed
 
+- Add the edit profile feature
+- Add the toast feature
+- Add the connections feature
+- Add the ShowButton feature
+
 ## Notes :
 
 NavBar
