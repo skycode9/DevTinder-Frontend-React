@@ -24,7 +24,7 @@ const Login = () => {
       const userData = result?.data?.data;
       console.log(userData);
       dispatch(addUser(userData));
-      navigate("/feed");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setAuthError(error?.response?.data?.msg || "Something went wrong");

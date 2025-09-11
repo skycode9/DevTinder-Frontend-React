@@ -8,17 +8,23 @@ import UserCard from "../components/UserCard";
 const Feed = () => {
   const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
+  console.log("feed", feed);
 
   const getFeed = async () => {
     if (feed) {
       return;
     }
     try {
-      const feedData = await axios.get(BASE_URL + "/feed", {
-        withCredentials: true,
-      });
+      const feedData = await axios.get(
+        BASE_URL + "/user/feed?page=1&limit=10",
+        {
+          withCredentials: true,
+        }
+      );
 
-      dispatch(addFeed(feedData?.data?.users));
+      console.log("feedData", feedData);
+
+      dispatch(addFeed(feedData?.data?.data));
     } catch (error) {
       console.log(error);
     }
@@ -40,8 +46,8 @@ const Feed = () => {
   return (
     feed && (
       <div>
-        <UserCard 
-          userFeed={feed[0]} 
+        <UserCard
+          userFeed={feed[0]}
           showButtons={true}
           onInterested={handleInterested}
           onIgnored={handleIgnored}

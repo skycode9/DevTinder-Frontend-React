@@ -58,6 +58,9 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/connection" className="">
+                  Connections
+                </Link>
                 <a>Settings</a>
               </li>
               <li>

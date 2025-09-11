@@ -39,6 +39,10 @@
 - Add the connections feature
 - Add the ShowButton feature
 
+- Add the connection page
+- Add the connection card
+- Add the connection slice
+
 ## Notes :
 
 NavBar
