@@ -47,6 +47,8 @@
 - accpted/reject connection request
 - Interested/Ignore the user card from the feed
 
+- Signup New User
+
 ## Notes :
 
 NavBar

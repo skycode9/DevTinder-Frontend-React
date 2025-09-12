@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import BASE_URL from "../config/baseurl";
 
-const ConnectionRequestCard = ({ userData, reqId }) => {
+const ConnectionRequestCard = ({ userData, reqId, onReview }) => {
   const { firstName, lastName, photoUrl, age, gender, about } = userData;
   const requestId = reqId;
 
@@ -50,13 +50,13 @@ const ConnectionRequestCard = ({ userData, reqId }) => {
               <div className="card-actions flex gap-4">
                 <button
                   className="btn btn-accent btn-sm"
-                  onClick={() => handleReviewRequest("accepted", requestId)}
+                  onClick={() => onReview("accepted", requestId)}
                 >
                   Accept
                 </button>
                 <button
                   className="btn btn-error btn-sm"
-                  onClick={() => handleReviewRequest("rejected", requestId)}
+                  onClick={() => onReview("rejected", requestId)}
                 >
                   Reject
                 </button>

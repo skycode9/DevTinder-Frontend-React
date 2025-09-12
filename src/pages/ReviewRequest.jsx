@@ -26,7 +26,26 @@ const ReviewRequest = () => {
     fetchData();
   }, []);
 
-  if (!connectionRequest) return;
+  const handleReviewRequest = async (status, requestId) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + requestId,
+        {},
+        { withCredentials: true }
+      );
+      // Remove the reviewed request from the state
+      setConnectionrequest((prev) =>
+        prev.filter((req) => req._id !== requestId)
+      );
+    } catch (error) {
+      console.log("Axios Error: " + error);
+      console.log(
+        "Error Message:" + error?.response?.data?.msg || error.message
+      );
+    }
+  };
+
+  if (!connectionRequest) return <h1>No Request Found..!</h1>;
 
   if (connectionRequest.length === 0) {
     return (
@@ -46,6 +65,7 @@ const ReviewRequest = () => {
               userData={connectionRequest.fromUserId}
               reqId={connectionRequest._id}
               key={connectionRequest._id}
+              onReview={handleReviewRequest}
             />
           );
         })}

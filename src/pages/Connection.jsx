@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import BASE_URL from "../config/baseurl";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
-import { data } from "react-router-dom";
 import ConnectionCard from "../components/ConnectionCard";
 
 const Connection = () => {
@@ -28,11 +27,17 @@ const Connection = () => {
   }, []);
 
   if (!connections) {
-    return null;
+    return (
+      <h1 className="text-center my-10 text-2xl font-bold">Data not found.!</h1>
+    );
   }
 
-  if (connections.length === 0) {
-    return <h1>Connection Data Not Found..!</h1>;
+  if (connections.length == 0) {
+    return (
+      <h1 className="text-center my-10 text-2xl font-bold">
+        Connection Data Not Found..!
+      </h1>
+    );
   }
 
   return (
