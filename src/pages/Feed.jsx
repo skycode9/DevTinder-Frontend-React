@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import BASE_URL from "../config/baseurl";
 import { useDispatch, useSelector } from "react-redux";
-import { addFeed } from "../utils/feedSlice";
+import { addUserToFeed } from "../utils/feedSlice";
 import UserCard from "../components/UserCard";
 
 const Feed = () => {
@@ -24,7 +24,7 @@ const Feed = () => {
 
       console.log("feedData", feedData);
 
-      dispatch(addFeed(feedData?.data?.data));
+      dispatch(addUserToFeed(feedData?.data?.data));
     } catch (error) {
       console.log(error);
     }
@@ -33,25 +33,14 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
-  const handleInterested = () => {
-    console.log("User interested in:", feed[0]?.firstName);
-    // Add API call for interested action
-  };
 
-  const handleIgnored = () => {
-    console.log("User ignored:", feed[0]?.firstName);
-    // Add API call for ignored action
-  };
-
+  if (!feed) return null;
+  if (feed.length == 0)
+    return <h1 className="flex justify-center my-10">No new users founds!</h1>;
   return (
     feed && (
       <div>
-        <UserCard
-          userFeed={feed[0]}
-          showButtons={true}
-          onInterested={handleInterested}
-          onIgnored={handleIgnored}
-        />
+        <UserCard userFeed={feed[0]} showButtons={true} />
       </div>
     )
   );
