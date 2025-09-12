@@ -87,6 +87,7 @@ const Login = () => {
     } catch (error) {
       console.log("Axios Error: " + error);
       console.log("Error Message: " + error?.response?.data?.err);
+      setAuthError(error?.response?.data?.err || "Something went wrong");
     }
   };
 
