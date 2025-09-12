@@ -18,6 +18,7 @@ const ReviewRequest = () => {
       console.log("crs", connectionRequest);
     } catch (error) {
       console.log("Axios Error: " + error);
+      console.log("Error Message" + error?.response?.data?.msg);
     }
   };
 
@@ -28,7 +29,11 @@ const ReviewRequest = () => {
   if (!connectionRequest) return;
 
   if (connectionRequest.length === 0) {
-    return <h1>No request found</h1>;
+    return (
+      <h1 className="flex justify-center py-4 text-2xl font-semibold">
+        No Request Found
+      </h1>
+    );
   }
 
   return (
@@ -39,6 +44,7 @@ const ReviewRequest = () => {
           return (
             <ConnectionRequestCard
               userData={connectionRequest.fromUserId}
+              reqId={connectionRequest._id}
               key={connectionRequest._id}
             />
           );

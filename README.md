@@ -44,6 +44,7 @@
 - Add the connection slice
 
 - New Page - See all my Conenction REquests
+- accpted/reject connection request
 
 ## Notes :
 
