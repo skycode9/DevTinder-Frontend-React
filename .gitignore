@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*.env
+*.env.production
+HIGH_PRIORITY_CHANGES.md
+PROJECT_ANALYSIS_AND_SUGGESTIONS.md
