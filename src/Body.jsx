@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
@@ -6,7 +6,6 @@ import axios from "axios";
 import BASE_URL from "./config/baseurl";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "./utils/userSlice";
-import { useEffect } from "react";
 
 const Body = () => {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ const Body = () => {
       });
       dispatch(addUser(res?.data?.user));
     } catch (error) {
-      if (error.status === 401) {
+      if (error.response?.status === 401) {
         console.log("Please Login..!");
         navigate("/login");
       }
@@ -33,6 +32,7 @@ const Body = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />

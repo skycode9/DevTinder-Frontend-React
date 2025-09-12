@@ -40,7 +40,8 @@ const Feed = () => {
 
   if (loading)
     return <div className="flex justify-center my-10">Loading...</div>;
-  if (!feed) return null;
+  if (!feed)
+    return <div className="flex justify-center my-10">No new users...</div>;
   if (feed.length == 0)
     return <h1 className="flex justify-center my-10">No new users founds!</h1>;
   return (
