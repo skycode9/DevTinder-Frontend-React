@@ -43,6 +43,8 @@
 - Add the connection card
 - Add the connection slice
 
+- New Page - See all my Conenction REquests
+
 ## Notes :
 
 NavBar
