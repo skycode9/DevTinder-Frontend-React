@@ -5,8 +5,9 @@ import ConnectionRequestCard from "../components/ConnectionRequestCard";
 
 const ReviewRequest = () => {
   const [connectionRequest, setConnectionrequest] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const fetchData = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,
@@ -19,6 +20,8 @@ const ReviewRequest = () => {
     } catch (error) {
       console.log("Axios Error: " + error);
       console.log("Error Message" + error?.response?.data?.msg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,6 +47,14 @@ const ReviewRequest = () => {
       );
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-4">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   if (!connectionRequest) return <h1>No Request Found..!</h1>;
 

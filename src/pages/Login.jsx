@@ -11,12 +11,38 @@ const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    let isValid = true;
+
+    // Reset errors
+    setEmailError("");
+    setPasswordError("");
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailId || !emailRegex.test(emailId)) {
+      setEmailError("Please enter a valid email address");
+      isValid = false;
+    }
+
+    // Password validation
+    if (!password || password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
   const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
     try {
-      e.preventDefault();
       const result = await axios.post(
         BASE_URL + "/login",
         {
@@ -82,7 +108,7 @@ const Login = () => {
                   <input
                     type="text"
                     placeholder="Enter First Name"
-                    className="input"
+                    className="input input-bordered"
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -96,7 +122,7 @@ const Login = () => {
                   <input
                     type="text"
                     placeholder="Enter Last Name"
-                    className="input"
+                    className="input input-bordered"
                     required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
@@ -113,12 +139,15 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="Enter email"
-                className="input"
+                className="input input-bordered"
                 required
                 value={emailId}
                 onChange={(e) => setEmailId(e.target.value)}
               />
             </div>
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
+            )}
 
             {/* Password */}
             <div className="form-control mt-4">
@@ -128,12 +157,15 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Enter password"
-                className="input"
+                className="input input-bordered"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            {passwordError && (
+              <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+            )}
 
             {/* Submit Button */}
             <div className="form-control mt-4">

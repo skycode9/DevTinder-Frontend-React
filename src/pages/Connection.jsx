@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BASE_URL from "../config/baseurl";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
@@ -9,8 +9,11 @@ const Connection = () => {
   const connections = useSelector((store) => store.connection);
   console.log("connection", connections);
 
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const fetchData = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(BASE_URL + "/user/view/connections", {
         withCredentials: true,
@@ -19,12 +22,22 @@ const Connection = () => {
       dispatch(addConnection(res?.data?.data));
     } catch (error) {
       console.log("Axios Error", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center my-10">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   if (!connections) {
     return (
