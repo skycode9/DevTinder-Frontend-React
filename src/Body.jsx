@@ -21,11 +21,11 @@ const Body = () => {
       });
       dispatch(addUser(res?.data?.user));
     } catch (error) {
-      if (error.response?.status === 401) {
+      if (error?.response?.status === 401) {
         console.log("Please Login..!");
         navigate("/login");
       }
-      console.log(error);
+      console.log("Axios Error: " + error);
     }
   };
 

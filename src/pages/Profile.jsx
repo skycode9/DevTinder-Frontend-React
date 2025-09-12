@@ -42,9 +42,6 @@ const Profile = () => {
         { firstName, lastName, photoUrl, age, gender, about },
         { withCredentials: true }
       );
-      console.log("resmsg", res?.data?.message);
-
-      console.log("res", res?.data?.data);
 
       dispatch(addUser(res?.data?.data));
       setToast(true);

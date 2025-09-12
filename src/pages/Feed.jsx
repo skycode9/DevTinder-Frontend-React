@@ -8,13 +8,11 @@ import UserCard from "../components/UserCard";
 const Feed = () => {
   const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
-  console.log("feed", feed);
   const [loading, setLoading] = useState(false);
 
   const getFeed = async () => {
-    if (feed) {
-      return;
-    }
+    if (feed) return;
+
     setLoading(true);
     try {
       const feedData = await axios.get(
@@ -24,11 +22,9 @@ const Feed = () => {
         }
       );
 
-      console.log("feedData", feedData);
-
       dispatch(addUserToFeed(feedData?.data?.data));
     } catch (error) {
-      console.log(error);
+      console.log("Axios Error: ", error);
     } finally {
       setLoading(false);
     }

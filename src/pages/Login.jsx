@@ -52,21 +52,21 @@ const Login = () => {
         { withCredentials: true }
       );
       const userData = result?.data?.data;
-      console.log(userData);
       dispatch(addUser(userData));
 
       setEmailId("");
       setPassword("");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log("Axios Error: ", error);
       setAuthError(error?.response?.data?.msg || "Something went wrong");
     }
   };
 
   const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
     try {
-      e.preventDefault();
       const res = await axios.post(
         BASE_URL + "/signup",
         {

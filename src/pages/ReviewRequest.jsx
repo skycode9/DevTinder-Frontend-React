@@ -12,11 +12,7 @@ const ReviewRequest = () => {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,
       });
-      console.log("res", res?.data?.connectionRequest);
-
       setConnectionrequest(res?.data?.connectionRequest);
-
-      console.log("crs", connectionRequest);
     } catch (error) {
       console.log("Axios Error: " + error);
       console.log("Error Message" + error?.response?.data?.msg);
@@ -70,7 +66,6 @@ const ReviewRequest = () => {
     connectionRequest && (
       <div>
         {connectionRequest.map((connectionRequest, index) => {
-          console.log("cr", connectionRequest);
           return (
             <ConnectionRequestCard
               userData={connectionRequest.fromUserId}

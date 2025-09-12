@@ -7,8 +7,6 @@ import ConnectionCard from "../components/ConnectionCard";
 
 const Connection = () => {
   const connections = useSelector((store) => store.connection);
-  console.log("connection", connections);
-
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -18,7 +16,6 @@ const Connection = () => {
       const res = await axios.get(BASE_URL + "/user/view/connections", {
         withCredentials: true,
       });
-      console.log("res", res);
       dispatch(addConnection(res?.data?.data));
     } catch (error) {
       console.log("Axios Error", error);

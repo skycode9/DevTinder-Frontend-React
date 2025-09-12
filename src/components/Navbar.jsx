@@ -20,7 +20,7 @@ const Navbar = () => {
       dispatch(removeConnection());
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      console.log("Axios Error: ", error);
     }
   };
 
